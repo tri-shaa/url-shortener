@@ -7,6 +7,9 @@ A simple URL shortener built using Spring Boot that converts long URLs into shor
 - Redirect to original URL
 - Simple and clean UI
 - REST API support
+- Click tracking
+- Copy links
+- Auto -update
 
 ##  Tech Stack
 - Java
