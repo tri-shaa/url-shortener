@@ -16,4 +16,6 @@ public class Url {
 
     private String shortCode;
     private String originalUrl;
+
+    private int clickCount;
 }

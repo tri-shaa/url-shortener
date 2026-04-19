@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.example.urlshortener.model.Url;
 
 @RestController
 @CrossOrigin(origins = "*") // optional but safe for frontend
@@ -35,4 +36,19 @@ public class UrlController {
                     .body("Short URL not found");
         }
     }
+
+    @GetMapping("/stats/{code}")
+    public ResponseEntity<?> getStats(@PathVariable String code) {
+
+        try {
+            Url url = service.getUrlByCode(code);
+
+            return ResponseEntity.ok("Clicks: " + url.getClickCount());
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("URL not found");
+        }
+    }
 }
+

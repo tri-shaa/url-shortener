@@ -1,5 +1,40 @@
 
 
+//package org.example.urlshortener.service;
+//
+//import org.example.urlshortener.model.Url;
+//import org.example.urlshortener.repository.UrlRepository;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Service;
+//
+//import java.util.UUID;
+//
+//@Service
+//public class UrlService {
+//
+//    @Autowired
+//    private UrlRepository repository;
+//
+//    public String shortenUrl(String originalUrl) {
+//        String shortCode = UUID.randomUUID().toString().substring(0, 6);
+//
+//        Url url = new Url();
+//        url.setOriginalUrl(originalUrl);
+//        url.setShortCode(shortCode);
+//
+//        repository.save(url);
+//
+//        return shortCode;
+//    }
+//
+//    public String getOriginalUrl(String shortCode) {
+//        return repository.findByShortCode(shortCode)
+//                .map(Url::getOriginalUrl)
+//                .orElseThrow(() -> new RuntimeException("URL not found"));
+//    }
+//}
+
+
 package org.example.urlshortener.service;
 
 import org.example.urlshortener.model.Url;
@@ -21,6 +56,7 @@ public class UrlService {
         Url url = new Url();
         url.setOriginalUrl(originalUrl);
         url.setShortCode(shortCode);
+        url.setClickCount(0); // 👈 initialize count
 
         repository.save(url);
 
@@ -28,8 +64,20 @@ public class UrlService {
     }
 
     public String getOriginalUrl(String shortCode) {
+        Url url = repository.findByShortCode(shortCode)
+                .orElseThrow(() -> new RuntimeException("URL not found"));
+
+        // 👇 increment click count
+        url.setClickCount(url.getClickCount() + 1);
+
+        // 👇 save updated value
+        repository.save(url);
+
+        return url.getOriginalUrl();
+    }
+
+    public Url getUrlByCode(String shortCode) {
         return repository.findByShortCode(shortCode)
-                .map(Url::getOriginalUrl)
                 .orElseThrow(() -> new RuntimeException("URL not found"));
     }
 }
