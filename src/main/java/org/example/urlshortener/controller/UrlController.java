@@ -18,7 +18,7 @@ public class UrlController {
     @PostMapping("/shorten")
     public String shorten(@RequestBody Urlrequest request) {
         String code = service.shortenUrl(request.getUrl());
-        return "http://localhost:8080/r/" + code;
+        return "https://url-shortener-mnda.onrender.com/r/" + code;
     }
 
     @GetMapping("/r/{code}")
