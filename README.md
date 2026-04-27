@@ -1,6 +1,8 @@
 #  URL Shortener
 
 A simple URL shortener built using Spring Boot that converts long URLs into short, shareable links.
+LIVE: https://url-shortener-mnda.onrender.com/
+GITHUB: https://github.com/tri-shaa/url-shortener/
 
 ##  Features
 - Shorten long URLs
